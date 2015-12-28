@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlContainerImages"
+        android:layout_above="@+id/rlTools_AE"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivPhoto_AE" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rlTools_AE"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivDeblur"
+            android:layout_margin="10dp"
+            android:src="@android:drawable/ic_menu_compass" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivMono"
+            android:layout_margin="10dp"
+            android:src="@android:drawable/ic_menu_crop"
+            android:layout_toRightOf="@+id/ivDeblur" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivRefresh"
+            android:src="@android:drawable/ic_menu_rotate"
+            android:layout_toLeftOf="@+id/ivSave_AE"
+            android:layout_margin="10dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivSave_AE"
+            android:src="@android:drawable/ic_menu_save"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp" />
+    </RelativeLayout>
+
+</LinearLayout>
