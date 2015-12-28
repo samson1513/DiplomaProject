@@ -24,9 +24,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by samson on 22.07.15.
- */
 public class CameraFragment extends Fragment implements View.OnClickListener, SurfaceHolder.Callback, Camera.PictureCallback {
 
     private MainActivity mActivity;

@@ -9,9 +9,6 @@ import com.example.samson.diplomaproject.R;
 import com.example.samson.diplomaproject.global.Constants;
 import com.example.samson.diplomaproject.utils.FileExplorer;
 
-/**
- * Created by samson on 22.07.15.
- */
 public class SplashActivity extends Activity {
 
     @Override

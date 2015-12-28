@@ -18,9 +18,6 @@ import com.example.samson.diplomaproject.utils.FragmentReplacer;
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * Created by samson on 22.07.15.
- */
 public class AlbumFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private MainActivity mActivity;

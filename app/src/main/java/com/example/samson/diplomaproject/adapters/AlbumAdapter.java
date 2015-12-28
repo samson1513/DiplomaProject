@@ -11,9 +11,6 @@ import com.example.samson.diplomaproject.holders.PhotoHolder;
 
 import java.util.ArrayList;
 
-/**
- * Created by samson on 22.07.15.
- */
 public class AlbumAdapter extends BaseAdapter {
 
     private Context mContext;

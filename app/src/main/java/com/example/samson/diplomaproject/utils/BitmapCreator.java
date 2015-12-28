@@ -8,9 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.Log;
 
-/**
- * Created by samson on 22.07.15.
- */
 public abstract class BitmapCreator {
 
     public static Bitmap getCompressedBitmap(float _width, float _ratio, String _path){

@@ -1,8 +1,5 @@
 package com.example.samson.diplomaproject.global;
 
-/**
- * Created by samson on 21.07.15.
- */
 public class Constants {
 
     public static final String IMAGE = "image";

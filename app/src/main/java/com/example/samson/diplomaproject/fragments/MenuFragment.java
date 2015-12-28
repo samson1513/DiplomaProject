@@ -12,9 +12,6 @@ import com.example.samson.diplomaproject.R;
 import com.example.samson.diplomaproject.activities.MainActivity;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
-/**
- * Created by samson on 23.07.15.
- */
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity mActivity;

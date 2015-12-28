@@ -7,9 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.example.samson.diplomaproject.R;
 
-/**
- * Created by samson on 23.07.15.
- */
 public abstract class FragmentReplacer {
 
     public static final void popSupBackStack(final FragmentActivity _activity) {
