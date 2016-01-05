@@ -1,45 +1,39 @@
 package com.example.samson.diplomaproject.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.samson.diplomaproject.R;
 import com.example.samson.diplomaproject.activities.MainActivity;
 import com.example.samson.diplomaproject.adapters.AlbumAdapter;
+import com.example.samson.diplomaproject.base.BaseFragment;
 import com.example.samson.diplomaproject.utils.FileExplorer;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class AlbumFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
-
-    private MainActivity mActivity;
+public class AlbumFragment extends BaseFragment<MainActivity> implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private GridView mAlbum;
     private AlbumAdapter mAdapter;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (MainActivity) activity;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initAlbum();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_album,null);
-        initAlbum(view);
-        return view;
+    protected int getLayoutResId() {
+        return R.layout.fragment_album;
     }
 
-    private void initAlbum(View _view){
-        mAlbum = (GridView) _view.findViewById(R.id.gvAlbum);
+    private void initAlbum(){
+        mAlbum = $(R.id.gvAlbum);
         mAlbum.setOnItemClickListener(this);
         mAlbum.setOnItemLongClickListener(this);
         mAlbum.setNumColumns(3);
@@ -48,7 +42,7 @@ public class AlbumFragment extends Fragment implements AdapterView.OnItemClickLi
 
     private void setAdapter(){
 
-        String targetPath = FileExplorer.getPathDirectory();
+        String targetPath = FileExplorer.getPathDirectory(FileExplorer.TypeImage.Normal);
 
         File targetDirectory = new File(targetPath);
 
@@ -58,7 +52,7 @@ public class AlbumFragment extends Fragment implements AdapterView.OnItemClickLi
             paths.add(file.getAbsolutePath());
         }
 
-        mAdapter = new AlbumAdapter(mActivity, paths);
+        mAdapter = new AlbumAdapter(getHostActivity(), paths);
         mAlbum.setAdapter(mAdapter);
     }
 
@@ -68,7 +62,7 @@ public class AlbumFragment extends Fragment implements AdapterView.OnItemClickLi
     }
 
     private void openEditor(String _path){
-        FragmentReplacer.replaceFragmentWithBackStack(mActivity, EditorFragment.newInstance(_path));
+        FragmentReplacer.replaceFragmentWithBackStack(getHostActivity(), EditorFragment.newInstance(_path));
     }
 
     @Override

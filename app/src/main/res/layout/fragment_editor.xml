@@ -36,7 +36,15 @@
             android:id="@+id/ivMono"
             android:layout_margin="10dp"
             android:src="@android:drawable/ic_menu_crop"
-            android:layout_toRightOf="@+id/ivDeblur" />
+            android:layout_toRightOf="@id/ivDeblur" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivMotion"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@id/ivMono"
+            android:src="@android:drawable/ic_menu_always_landscape_portrait" />
 
         <ImageView
             android:layout_width="wrap_content"

@@ -1,32 +1,30 @@
 package com.example.samson.diplomaproject.fragments;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.samson.diplomaproject.R;
 import com.example.samson.diplomaproject.activities.MainActivity;
+import com.example.samson.diplomaproject.base.BaseFragment;
 import com.example.samson.diplomaproject.utils.FileExplorer;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-public class CameraFragment extends Fragment implements View.OnClickListener, SurfaceHolder.Callback, Camera.PictureCallback {
-
-    private MainActivity mActivity;
+public class CameraFragment extends BaseFragment<MainActivity> implements View.OnClickListener, SurfaceHolder.Callback, Camera.PictureCallback {
 
     private ImageView mPhoto, mEdit, mBack;
     private TextView mCancel;
@@ -39,28 +37,24 @@ public class CameraFragment extends Fragment implements View.OnClickListener, Su
     private byte[] arrayImage;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (MainActivity) activity;
-    }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_camera,null);
-
-        findUI(view);
+        findUI();
         setListeners();
-
-        return view;
     }
 
-    private void findUI(View _view){
-        mPhoto = (ImageView) _view.findViewById(R.id.ivPhoto_AC);
-        mEdit = (ImageView) _view.findViewById(R.id.ivToEdit_AC);
-        mBack = (ImageView) _view.findViewById(R.id.ivBack_AC);
-        mCancel = (TextView) _view.findViewById(R.id.llCancel);
-        mPreview = (SurfaceView) _view.findViewById(R.id.svPreview_AC);
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_camera;
+    }
+
+    private void findUI(){
+        mPhoto = $(R.id.ivPhoto_AC);
+        mEdit = $(R.id.ivToEdit_AC);
+        mBack = $(R.id.ivBack_AC);
+        mCancel = $(R.id.llCancel);
+        mPreview = $(R.id.svPreview_AC);
     }
 
     private void setListeners(){
@@ -117,14 +111,14 @@ public class CameraFragment extends Fragment implements View.OnClickListener, Su
     }
 
     private boolean checkCameraHardware() {
-        return mActivity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        return getHostActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.ivBack_AC:
-                FragmentReplacer.popSupBackStack(mActivity);
+                FragmentReplacer.popSupBackStack(getHostActivity());
                 break;
             case R.id.ivPhoto_AC:
                 camera.takePicture(null, null, this);
@@ -158,7 +152,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener, Su
     }
 
     private void saveImage(){
-        mImageFile = FileExplorer.createImageFile();
+        String timeStamp = new SimpleDateFormat("MMdd_HHmm", Locale.getDefault()).format(new Date());
+        mImageFile = FileExplorer.createImageFile(timeStamp, FileExplorer.TypeImage.Normal);
 
         try {
             FileOutputStream outputStream = new FileOutputStream(mImageFile);
@@ -168,12 +163,11 @@ public class CameraFragment extends Fragment implements View.OnClickListener, Su
             e.printStackTrace();
             Log.e("Project", "failed to save directory");
         }
-
     }
 
     private void openEditor(){
         FragmentReplacer.replaceFragment(
-                mActivity,
+                getHostActivity(),
                 EditorFragment.newInstance(String.valueOf(mImageFile.getAbsoluteFile()))
         );
     }

@@ -3,41 +3,68 @@ package com.example.samson.diplomaproject.utils;
 import android.os.Environment;
 import android.util.Log;
 
-import com.example.samson.diplomaproject.global.Constants;
-
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public abstract class FileExplorer {
 
+    public static final String TAG_BLUR = "_B";
+    public static final String TAG_DEFOCUS = "_D";
+    public static final String FORMAT_JPG = ".jpg";
+    public static final String DIRECTORY = "Project";
+    public static final String DIRECTORY_NORMAL = "Normal";
+    public static final String DIRECTORY_BLURED = "Blured";
+    public static final String DIRECTORY_DEFOCUSED = "Defocused";
 
-    public static String getPathDirectory(){
+    public enum TypeImage {Normal, Blured, Defocused}
+
+    public static String getPathDirectory(TypeImage type) {
         return new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                Constants.DIRECTORY
+                getNameDirectory(type)
         ).getAbsolutePath() + File.separator;
     }
 
-    public static void createDirectory(){
+    public static void createDirectory(TypeImage type) {
         File mediaStorageDir = new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                Constants.DIRECTORY
+                getNameDirectory(type)
         );
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdir()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdir()) {
                 Log.e("Project", "failed to create directory: is not made");
             }
         }
     }
 
-    public static File createImageFile(){
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        return new File(getPathDirectory()
-                + "IMG_"
-                + timeStamp
-                + ".jpg");
+    private static String getNameDirectory(TypeImage type) {
+        String dirName = DIRECTORY + File.separator;
+        switch (type) {
+            case Blured:
+                dirName += DIRECTORY_BLURED;
+                break;
+            case Defocused:
+                dirName += DIRECTORY_DEFOCUSED;
+                break;
+            default:
+                dirName += DIRECTORY_NORMAL;
+                break;
+        }
+        return dirName;
     }
 
+    public static File createImageFile(String imageName, TypeImage type) {
+        String fileName = imageName;
+        switch (type) {
+            case Blured:
+                fileName += TAG_BLUR + FORMAT_JPG;
+                break;
+            case Defocused:
+                fileName += TAG_DEFOCUS + FORMAT_JPG;
+                break;
+            case Normal:
+                fileName += FORMAT_JPG;
+                break;
+        }
+        return new File(getPathDirectory(type) + fileName);
+    }
 }
