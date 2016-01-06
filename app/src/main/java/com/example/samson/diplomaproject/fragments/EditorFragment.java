@@ -2,7 +2,6 @@ package com.example.samson.diplomaproject.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v8.renderscript.Allocation;
@@ -17,7 +16,7 @@ import com.example.samson.diplomaproject.activities.MainActivity;
 import com.example.samson.diplomaproject.base.BaseFragment;
 import com.example.samson.diplomaproject.global.Constants;
 import com.example.samson.diplomaproject.utils.EffectsUtil;
-import com.example.samson.diplomaproject.utils.FileExplorer;
+import com.example.samson.diplomaproject.utils.FileManager;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
 import java.io.ByteArrayOutputStream;
@@ -50,7 +49,7 @@ public class EditorFragment extends BaseFragment<MainActivity> implements View.O
         mPath = getArguments().getString(Constants.IMAGE);
 
         findUI();
-        setListeners();
+        setClickListeners(this, mDeblur, mBinar, mMotion, mSave, mRefresh);
         getBaseBitmap();
         setStartImage();
     }
@@ -67,14 +66,6 @@ public class EditorFragment extends BaseFragment<MainActivity> implements View.O
         mRefresh = $(R.id.ivRefresh);
         mPhoto = $(R.id.ivPhoto_AE);
         mMotion = $(R.id.ivMotion);
-    }
-
-    private void setListeners() {
-        mDeblur.setOnClickListener(this);
-        mBinar.setOnClickListener(this);
-        mMotion.setOnClickListener(this);
-        mSave.setOnClickListener(this);
-        mRefresh.setOnClickListener(this);
     }
 
     private void getBaseBitmap() {
@@ -132,7 +123,7 @@ public class EditorFragment extends BaseFragment<MainActivity> implements View.O
 
     private void saveImage() {
         String name = mPath.substring(mPath.lastIndexOf(File.separator));
-        File mImageFile = FileExplorer.createImageFile(name, FileExplorer.TypeImage.Normal);
+        File mImageFile = FileManager.createImageFile(name, FileManager.TypeImage.Photo);
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         mEndBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);

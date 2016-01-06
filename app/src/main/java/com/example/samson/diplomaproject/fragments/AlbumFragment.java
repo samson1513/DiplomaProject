@@ -9,7 +9,7 @@ import com.example.samson.diplomaproject.R;
 import com.example.samson.diplomaproject.activities.MainActivity;
 import com.example.samson.diplomaproject.adapters.AlbumAdapter;
 import com.example.samson.diplomaproject.base.BaseFragment;
-import com.example.samson.diplomaproject.utils.FileExplorer;
+import com.example.samson.diplomaproject.utils.FileManager;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
 import java.io.File;
@@ -42,7 +42,7 @@ public class AlbumFragment extends BaseFragment<MainActivity> implements Adapter
 
     private void setAdapter(){
 
-        String targetPath = FileExplorer.getPathDirectory(FileExplorer.TypeImage.Normal);
+        String targetPath = FileManager.getPathDirectory(FileManager.TypeImage.Photo);
 
         File targetDirectory = new File(targetPath);
 

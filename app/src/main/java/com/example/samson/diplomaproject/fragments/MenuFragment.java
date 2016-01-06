@@ -20,7 +20,7 @@ public class MenuFragment extends BaseFragment<MainActivity> implements View.OnC
         super.onViewCreated(view, savedInstanceState);
 
         findUI();
-        setListeners();
+        setClickListeners(this, mToCamera, mToAlbum, mToExit);
     }
 
     @Override
@@ -32,12 +32,6 @@ public class MenuFragment extends BaseFragment<MainActivity> implements View.OnC
         mToAlbum = $(R.id.tvAlbum);
         mToCamera = $(R.id.tvCamera);
         mToExit = $(R.id.tvExit);
-    }
-
-    private void setListeners(){
-        mToAlbum.setOnClickListener(this);
-        mToCamera.setOnClickListener(this);
-        mToExit.setOnClickListener(this);
     }
 
     @Override

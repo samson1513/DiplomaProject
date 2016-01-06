@@ -8,7 +8,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.Log;
 
-public abstract class BitmapCreator {
+import java.io.ByteArrayOutputStream;
+
+public abstract class BitmapManager {
 
     public static Bitmap getCompressedBitmap(float _width, float _ratio, String _path){
 
@@ -111,5 +113,11 @@ public abstract class BitmapCreator {
         }
 
         return inSampleSize;
+    }
+
+    public static byte[] convertToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
 }

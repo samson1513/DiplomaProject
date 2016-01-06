@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.samson.diplomaproject.R;
 import com.example.samson.diplomaproject.activities.MainActivity;
 import com.example.samson.diplomaproject.base.BaseFragment;
-import com.example.samson.diplomaproject.utils.FileExplorer;
+import com.example.samson.diplomaproject.utils.FileManager;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
 import java.io.File;
@@ -41,7 +41,7 @@ public class CameraFragment extends BaseFragment<MainActivity> implements View.O
         super.onViewCreated(view, savedInstanceState);
 
         findUI();
-        setListeners();
+        setClickListeners(this, mPhoto, mEdit, mBack, mCancel);
     }
 
     @Override
@@ -55,13 +55,6 @@ public class CameraFragment extends BaseFragment<MainActivity> implements View.O
         mBack = $(R.id.ivBack_AC);
         mCancel = $(R.id.llCancel);
         mPreview = $(R.id.svPreview_AC);
-    }
-
-    private void setListeners(){
-        mPhoto.setOnClickListener(this);
-        mEdit.setOnClickListener(this);
-        mBack.setOnClickListener(this);
-        mCancel.setOnClickListener(this);
     }
 
     @Override
@@ -152,17 +145,7 @@ public class CameraFragment extends BaseFragment<MainActivity> implements View.O
     }
 
     private void saveImage(){
-        String timeStamp = new SimpleDateFormat("MMdd_HHmm", Locale.getDefault()).format(new Date());
-        mImageFile = FileExplorer.createImageFile(timeStamp, FileExplorer.TypeImage.Normal);
-
-        try {
-            FileOutputStream outputStream = new FileOutputStream(mImageFile);
-            outputStream.write(arrayImage);
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Project", "failed to save directory");
-        }
+        mImageFile = FileManager.saveImage(null, FileManager.TypeImage.Photo, arrayImage);
     }
 
     private void openEditor(){

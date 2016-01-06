@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.samson.diplomaproject.R;
-import com.example.samson.diplomaproject.utils.BitmapCreator;
+import com.example.samson.diplomaproject.utils.BitmapManager;
 
 public class PhotoHolder {
     private ImageView mPicture;
@@ -14,6 +14,6 @@ public class PhotoHolder {
     }
 
     public void setPicture(String _path){
-        mPicture.setImageBitmap(BitmapCreator.getCompressedBitmap(256, 1F, _path));
+        mPicture.setImageBitmap(BitmapManager.getCompressedBitmap(256, 1F, _path));
     }
 }

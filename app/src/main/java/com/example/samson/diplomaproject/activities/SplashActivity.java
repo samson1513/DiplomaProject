@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.samson.diplomaproject.R;
-import com.example.samson.diplomaproject.utils.FileExplorer;
+import com.example.samson.diplomaproject.utils.FileManager;
 
 public class SplashActivity extends Activity {
 
@@ -14,7 +14,8 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        FileExplorer.createDirectory(FileExplorer.TypeImage.Normal);
+        FileManager.createProjectDirectory();
+        FileManager.createWorkDirectory(FileManager.TypeImage.Photo);
         openMainMenu();
     }
 

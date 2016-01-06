@@ -26,17 +26,12 @@ public class ModeFragment extends BaseFragment<MainActivity> implements View.OnC
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findUI();
-        setListeners();
+        setClickListeners(this, btnLearn, btnTest);
     }
 
     private void findUI() {
         btnLearn = $(R.id.btnLearn);
         btnTest = $(R.id.btnTest);
-    }
-
-    private void setListeners() {
-        btnLearn.setOnClickListener(this);
-        btnTest.setOnClickListener(this);
     }
 
     @Override
