@@ -1,12 +1,12 @@
 package com.example.samson.diplomaproject.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.RenderScript;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,10 +19,7 @@ import com.example.samson.diplomaproject.utils.EffectsUtil;
 import com.example.samson.diplomaproject.utils.FileManager;
 import com.example.samson.diplomaproject.utils.FragmentReplacer;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class EditorFragment extends BaseFragment<MainActivity> implements View.OnClickListener {
 
@@ -81,11 +78,11 @@ public class EditorFragment extends BaseFragment<MainActivity> implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivDeblur:
-                mEndBitmap = EffectsUtil.doGaussianBlur(mStartBitmap, 3);
+                mEndBitmap = EffectsUtil.doGaussianBlur(mStartBitmap, 3, getHostActivity());
                 mPhoto.setImageBitmap(mEndBitmap);
                 break;
             case R.id.ivMotion:
-                mEndBitmap = EffectsUtil.setGaussFilter(mStartBitmap);
+                mEndBitmap = EffectsUtil.doMotionBlur(mStartBitmap, 20, 1);
                 mPhoto.setImageBitmap(mEndBitmap);
                 break;
             case R.id.ivMono:
@@ -122,21 +119,11 @@ public class EditorFragment extends BaseFragment<MainActivity> implements View.O
     }
 
     private void saveImage() {
-        String name = mPath.substring(mPath.lastIndexOf(File.separator));
-        File mImageFile = FileManager.createImageFile(name, FileManager.TypeImage.Photo);
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        mEndBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] arrayImage = stream.toByteArray();
-
-        try {
-            FileOutputStream outputStream = new FileOutputStream(mImageFile);
-            outputStream.write(arrayImage);
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Project", "failed to save directory");
-        }
+        FileManager.saveImage(
+                mPath.substring(mPath.lastIndexOf(File.separator)),
+                FileManager.TypeImage.Photo,
+                mEndBitmap
+        );
     }
 
     private void openMainMenu() {

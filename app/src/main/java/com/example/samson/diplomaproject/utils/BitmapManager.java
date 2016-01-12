@@ -1,6 +1,5 @@
 package com.example.samson.diplomaproject.utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,13 +11,17 @@ import java.io.ByteArrayOutputStream;
 
 public abstract class BitmapManager {
 
-    public static Bitmap getCompressedBitmap(float _width, float _ratio, String _path){
+    public static Bitmap getBitmap(String filePath) {
+       return BitmapFactory.decodeFile(filePath);
+    }
+
+    public static Bitmap getCompressedBitmap(float width, float ratio, String path){
 
         Bitmap scaledBitmap = null;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        Bitmap bmp = BitmapFactory.decodeFile(_path, options);
+        Bitmap bmp = BitmapFactory.decodeFile(path, options);
 
         int actualHeight = options.outHeight;
         int actualWidth = options.outWidth;
@@ -26,21 +29,21 @@ public abstract class BitmapManager {
         if(options.outHeight == 0)
             return null;
 
-        float maxHeight = _width / _ratio;
+        float maxHeight = width / ratio;
         float imgRatio = actualWidth / actualHeight;
 
-        if (actualHeight > maxHeight || actualWidth > _width) {
-            if (imgRatio < _ratio) {
+        if (actualHeight > maxHeight || actualWidth > width) {
+            if (imgRatio < ratio) {
                 imgRatio = maxHeight / actualHeight;
                 actualWidth = (int) (imgRatio * actualWidth);
                 actualHeight = (int) maxHeight;
-            } else if (imgRatio > _ratio) {
-                imgRatio = _width / actualWidth;
+            } else if (imgRatio > ratio) {
+                imgRatio = width / actualWidth;
                 actualHeight = (int) (imgRatio * actualHeight);
-                actualWidth = (int) _width;
+                actualWidth = (int) width;
             } else {
                 actualHeight = (int) maxHeight;
-                actualWidth = (int) _width;
+                actualWidth = (int) width;
 
             }
         }
@@ -50,7 +53,7 @@ public abstract class BitmapManager {
         options.inJustDecodeBounds = false;
 
         try {
-            bmp = BitmapFactory.decodeFile(_path, options);
+            bmp = BitmapFactory.decodeFile(path, options);
         } catch (OutOfMemoryError exception) {
             exception.printStackTrace();
             Log.e("compressed bitmap", "OutOfMemoryError bmp");
