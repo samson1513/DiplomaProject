@@ -30,7 +30,7 @@ public class EditorFragment extends BaseFragment<MainActivity> implements View.O
 
     private String mPath;
 
-    public static EditorFragment newInstance(String _path){
+    public static EditorFragment newInstance(String _path) {
         EditorFragment fragment = new EditorFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.IMAGE, _path);

@@ -1,5 +1,7 @@
 package com.example.samson.diplomaproject.global;
 
+import java.util.Random;
+
 public class Complex {
     private double re;   // the real part
     private double im;   // the imaginary part
@@ -80,6 +82,11 @@ public class Complex {
     // a / b
     public static Complex divides(Complex a, Complex b) {
         return multi(a,b.reciprocal());
+    }
+
+    public static Complex random() {
+        Random rdm = new Random();
+        return new Complex(rdm.nextDouble(), rdm.nextDouble());
     }
 
 }
